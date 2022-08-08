@@ -12,6 +12,7 @@ app.MapPost("/{*route}", Routing.RootPost);
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-//app.UseAuthorization();
+//start routes cache
+RouteManager.GetRoute("");
 
 app.Run();

@@ -9,17 +9,27 @@ namespace webapp.models
     {
         public static IResult Index()
         {
-            return Results.Ok();
-        }
-        
-        public static IResult RootGet(string route)
-        {
-            return Results.Ok(route);
+            return Results.Ok("https://github.com/DeltaTangoFoxtrot/FLAAS-dotnet");
         }
 
-        public static IResult RootPost(string route)
+        public static IResult RootGet(string route)
         {
-            return Results.Ok(route);
+            var page = RouteManager.GetRoute(route) ?? new Page();
+            var body = HtmlGenerator.Generate(page);
+            return new HtmlResult(body);
+        }
+
+        public static IResult RootPost(string route, Page? page)
+        {
+            if (page == null)
+            {
+                return Results.Problem("Body required - see documentation at https://github.com/DeltaTangoFoxtrot/FLAAS-dotnet");
+            }
+            var model = new Route(route, page);
+            RouteManager.AddRoute(model);
+
+            var body = HtmlGenerator.Generate(page);
+            return new HtmlResult(body);
         }
     }
 }
