@@ -21,5 +21,6 @@ namespace webapp.models
 
         public string Path {get; set;}
         public Page Page {get; set;}
+        public readonly DateTime CreatedOn = DateTime.Now;
     }
 }
