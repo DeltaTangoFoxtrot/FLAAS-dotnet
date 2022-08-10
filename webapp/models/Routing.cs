@@ -15,6 +15,8 @@ namespace webapp.models
         public static IResult RootGet(string route)
         {
             var page = RouteManager.GetRoute(route) ?? new Page();
+            page.HtmlEncode();
+            
             var body = HtmlGenerator.Generate(page);
             return new HtmlResult(body);
         }
