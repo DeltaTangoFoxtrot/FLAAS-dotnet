@@ -2,10 +2,13 @@
 Dot Net port of Facebook Link as a Service
 
 ## Usage
-There are 3 main routes available in the FLAAS implementation. 
+There are 3 main routes available in the FLAAS implementation.
+
 The first is an index which displays a link to documentation.
 The second is a POST to any subdirectory on the domain.
 The third is a corresponding GET to any subdirectory on the domain.
+
+Subdirectories can be any valid HTTP url, such as "/about", "/wiki/en/banana#controvery", "/article?id=1234567"
 
 ### "/" GET
 Retrieves a link to this repository. 
