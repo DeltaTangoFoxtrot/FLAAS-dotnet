@@ -16,12 +16,19 @@ Retrieves a link to this repository.
 ### "/*" POST
 Uses the JSON body of the request to populate a page with Open Graph attributes, and the redirect for the page.
 {
+
   "Title" : "string", //og:title
+  
   "Image" : "string", //og:image
+  
   "Description" : "string", //og:description
+  
   "Url" : "string", //og:url
+  
   "Type" : "string" //og:type
+  
   "Redirect" : "string" //javasript window.location redirect on page load
+  
 }
 
 ### "/*" GET
