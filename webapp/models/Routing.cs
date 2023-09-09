@@ -21,8 +21,15 @@ namespace webapp.models
             return new HtmlResult(body);
         }
 
-        public static IResult RootPost(string route, Page? page)
+        public static IResult RootPost(IHttpContextAccessor http, IConfiguration conf, string route, Page? page)
         {
+            if (!string.IsNullOrEmpty(conf["apiKey"]))
+            {
+                if (!(http.HttpContext?.Request.Headers.TryGetValue("apikey", out var apiKey)??false) || apiKey != conf["apiKey"])
+                {
+                    throw new UnauthorizedAccessException();
+                }
+            }
             if (page == null)
             {
                 return Results.Problem("Body required - see documentation at https://github.com/DeltaTangoFoxtrot/FLAAS-dotnet");

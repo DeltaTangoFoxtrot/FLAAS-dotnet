@@ -2,8 +2,9 @@ using webapp.models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var app = builder.Build();
+builder.Services.AddHttpContextAccessor();
 
+var app = builder.Build();
 
 app.MapGet("/", Routing.Index);
 app.MapGet("/{*route}", Routing.RootGet);
