@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace webapp.models
 {
     public static class Routing
@@ -39,6 +34,19 @@ namespace webapp.models
 
             var body = HtmlGenerator.Generate(page);
             return new HtmlResult(body);
+        }
+
+        public static IResult RootDelete(IHttpContextAccessor http, IConfiguration conf, string route)
+        {
+            if (!string.IsNullOrEmpty(conf["apiKey"]))
+            {
+                if (!(http.HttpContext?.Request.Headers.TryGetValue("apikey", out var apiKey) ?? false) || apiKey != conf["apiKey"])
+                {
+                    throw new UnauthorizedAccessException();
+                }
+            }
+            RouteManager.RemoveRoute(route);
+            return Results.Ok();
         }
     }
 }

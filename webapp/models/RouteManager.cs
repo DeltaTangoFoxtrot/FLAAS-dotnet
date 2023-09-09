@@ -66,5 +66,30 @@ namespace webapp.models
                 ?.FirstOrDefault(r => string.Equals(r.Path, route, StringComparison.OrdinalIgnoreCase))
                 ?.Page;
         }
+
+        public static bool RemoveRoute(string route)
+        {
+            lock (mutex)
+            {
+                var newRoutes = _routes.OrderByDescending(r => r.CreatedOn)
+                    .Where(r => !r.Path.Equals(route, StringComparison.OrdinalIgnoreCase));
+
+                try
+                {
+                    var routesText = JsonSerializer.Serialize(newRoutes);
+                    using (var sw = new StreamWriter(File.Open(fileName, FileMode.Create)))
+                    {
+                        sw.Write(routesText);
+                    }
+                    _routes = newRoutes;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"could not open routes file. {ex.Message}");
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }
