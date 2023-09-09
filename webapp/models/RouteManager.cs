@@ -18,8 +18,7 @@ namespace webapp.models
             lock(mutex)
             {
                 var newRoutes = _routes.OrderByDescending(r => r.CreatedOn)
-                    .Where(r => r.Path != route.Path)
-                    .Take(99)
+                    .Where(r => !r.Path.Equals(route.Path, StringComparison.OrdinalIgnoreCase))
                     .Append(route);
                 
                 try
